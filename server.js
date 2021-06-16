@@ -19,6 +19,22 @@ function sendToOtherClients(data, socket) {
     + data))
 }
 
+function sendWhisperToAnotherClient() {
+
+}
+
+function updateUsernameOfClient() {
+
+}
+
+function kickAnotherConnectedClient() {
+
+}
+
+function sendListOfConnectedClientNames() {
+    
+}
+
 const server = net.createServer((socket) => {
     clients.push(socket);
     console.log('Number of clients, ', clients.length)
