@@ -1,5 +1,6 @@
 const net = require('net');
-const fs = require('fs');
+const fs = require('fs'); // fs is short for file system
+const express = require('express');
 let clients = [];
 let count = 0;
 
@@ -32,7 +33,7 @@ function kickAnotherConnectedClient() {
 }
 
 function sendListOfConnectedClientNames() {
-    
+
 }
 
 const server = net.createServer((socket) => {
@@ -60,4 +61,6 @@ const server = net.createServer((socket) => {
     })
 }).listen(1974);
 
-console.log('Connection made! Listening on port 1974.');
+let portNumber = 1974;
+
+console.log(`Connection made! Listening on port ${portNumber}.`);
