@@ -39,7 +39,7 @@ function sendWhisperToAnotherClient(data, socket) {
 }
 
 function updateUsernameOfClient(data, socket) {
-    const words = data.split(' ');
+    const words = data.trim().split(' ');
     const username = words[1];
     const otherClients = getOtherClients(socket);
     const message = `Changing ${socket.name} to ${username}`;
@@ -49,12 +49,24 @@ function updateUsernameOfClient(data, socket) {
   
 }
 
-function kickAnotherConnectedClient() {
-    // const kickOff = ???
+function kickAnotherConnectedClient(data, socket) {
+    const words = data.trim().split(' ');
+    const username = words[1];
+    const password = words[2];
+    const clientToKickOut = clients.find(clientsocket => clientsocket.name === username);
+    const isValid = clientToKickOut && password === 'Pa$$word';
+    
+    if (isValid) {
+        
+        clientToKickOut.write('You are kicked out, buddy! Sorry. Not sorry.');
+        clientToKickOut.emit('end');
+    }
 }
 
-function sendListOfAllConnectedClientNames() {
-    // const list = ???
+function sendListOfAllConnectedClientNames(socket) {
+    const listofNames = clients.map(clientsocket => clientsocket.name);
+    const message = listofNames.join(',');
+    socket.write(message);
 }
 
 
@@ -74,7 +86,7 @@ function handleMessage(data, socket) {
         return regexp.test(data)
     }
     function isSendListOfAllConnectedClientNames() {
-        const regexp = /^\/clientlist /;
+        const regexp = /^\/clientlist/;
         return regexp.test(data);
     }
 
@@ -85,7 +97,7 @@ function handleMessage(data, socket) {
     } else if (isKickAnotherConnectedClient()) {
         kickAnotherConnectedClient(data, socket);
     } else if (isSendListOfAllConnectedClientNames()) {
-        sendListOfAllConnectedClientNames(data, socket);
+        sendListOfAllConnectedClientNames(socket);
     } else { 
         sendToOtherClients(data, socket);
     }
@@ -105,10 +117,11 @@ const server = net.createServer((socket) => {
     console.log(`socket port: ${socket.remotePort}`);
     socket.write('Welcome to the chat server!'); 
     socket.setEncoding('utf-8');
-
+    getOtherClients(socket).forEach(clientsocket => clientsocket.write(`connected client ${socket.name}`));
+    writeToChatLog(`connected client ${socket.name}`);
     socket.on('data', data => {
-        writeToChatLog(data)
-        handleMessage(data, socket)
+        writeToChatLog(data);
+        handleMessage(data, socket);
 
     })
     socket.on('end', function () {
