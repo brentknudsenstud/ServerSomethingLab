@@ -15,7 +15,7 @@ function writeToChatLog(data) {
 
 function getOtherClients(socket) {
     return clients.filter(socketItem => {
-        return socketItem !== socket
+        return socketItem.clientId !== socket.clientId;
     })
 }
 
@@ -28,29 +28,33 @@ function sendToOtherClients(data, socket) {
 function sendWhisperToAnotherClient(data, socket) {
     const words = data.split(' ');
     const username = words[1];
-    const message = socket.name + words.slice(1).join(' ');
+    const message = socket.name + ' ' + words.slice(2).join(' ');
     const clientToSendMessageTo = getOtherClients(socket).find(client => {
-        return client.name === username;
+        return client.name.trim() === username.trim();
     })
     if (clientToSendMessageTo) {
         clientToSendMessageTo.write(message)
     }
-    console.log(username, message);
+    
 }
 
 function updateUsernameOfClient(data, socket) {
     const words = data.split(' ');
     const username = words[1];
+    const otherClients = getOtherClients(socket);
+    const message = `Changing ${socket.name} to ${username}`;
     socket.name = username;
-    console.log(username);
+    
+    otherClients.forEach(client => client.write(message))
+  
 }
 
 function kickAnotherConnectedClient() {
-
+    // const kickOff = ???
 }
 
 function sendListOfAllConnectedClientNames() {
-
+    // const list = ???
 }
 
 
@@ -58,7 +62,7 @@ function handleMessage(data, socket) {
     
     function isSendWhisperToAnotherClient() {
         const regexp = /^\/w /;
-        console.log(regexp.test(data))
+      
         return regexp.test(data);
     } 
     function isUpdateUsernameOfClient() {
@@ -93,8 +97,9 @@ app.get('/', function(request, response) {
 
 const server = net.createServer((socket) => {
     clients.push(socket);
-    console.log('Number of clients, ', clients.length)
+
     count = count + 1;
+    socket.clientId = count;
     socket.name = 'client' + count ; 
     console.log(`socket address: ${socket.remoteAddress}`);
     console.log(`socket port: ${socket.remotePort}`);
@@ -104,7 +109,7 @@ const server = net.createServer((socket) => {
     socket.on('data', data => {
         writeToChatLog(data)
         handleMessage(data, socket)
-        console.log(data);
+
     })
     socket.on('end', function () {
         const disconnectMessage = 'disconnecting ' + socket.name;

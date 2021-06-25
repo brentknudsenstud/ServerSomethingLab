@@ -307,3 +307,79 @@ the world is on fire
 /username becky
 
 /w becky that buick is rad
+
+Hello everyone
+
+/username Calhoun
+
+/w Calhoun some whisper
+
+/w Calhoun
+
+/w client1 oneword
+
+disconnecting client3
+/w client1 hello world
+
+/username john
+
+/w john goobye earth
+
+disconnecting client2
+/w client1 hello world
+
+/username john
+
+/w username hello
+
+disconnecting client2
+/w john helloworld
+
+/username jane
+
+/w jane hello there jane!
+
+/w client1 hellothere
+
+/username johnny
+
+/w johnny hello again
+
+/w johnny hello again!
+
+/w client1 is this working?
+
+disconnecting client2
+/w client1 hello world
+
+/username henry
+
+/w henry hello world
+
+/w client1 hellooooo!
+
+/w client1 hellish o
+
+/username john
+
+/w john please help me
+
+/w client1 what do you want
+
+/username betsy
+
+/w betsy hello there cowgirl
+
+/w client1 are you tall?
+
+/username george
+
+/w george are you curious
+
+/w client1 are you there
+
+/username penelope
+
+/ p/w penelope yes I am!
+
+/w penelope yes I am here!
