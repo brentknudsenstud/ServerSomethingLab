@@ -34,8 +34,11 @@ function sendWhisperToAnotherClient(data, socket) {
     })
     if (clientToSendMessageTo) {
         clientToSendMessageTo.write(message)
-    }
-    
+    } // else if (error) {
+        // throw error;
+        // console.log('Invalid user input');
+    // }put if (error) message in here if it doesn't work for some reason
+    // if (err) throw err;
 }
 
 function updateUsernameOfClient(data, socket) {
@@ -44,8 +47,9 @@ function updateUsernameOfClient(data, socket) {
     const otherClients = getOtherClients(socket);
     const message = `Changing ${socket.name} to ${username}`;
     socket.name = username;
-    
-    otherClients.forEach(client => client.write(message))
+    otherClients.forEach(client => client.write(message));
+    // put if (error) message in here if it doesn't work for some reason
+    // if (err) throw err;
   
 }
 
@@ -61,6 +65,8 @@ function kickAnotherConnectedClient(data, socket) {
         clientToKickOut.write('You are kicked out, buddy! Sorry. Not sorry.');
         clientToKickOut.emit('end');
     }
+    // put if (error) message in here if it doesn't work for some reason
+    // if (err) throw err;
 }
 
 function sendListOfAllConnectedClientNames(socket) {
