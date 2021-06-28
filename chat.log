@@ -120,3 +120,32 @@ connected client client3
 
 disconnecting brent
 /clientlist
+
+connected client client1
+connected client client2
+connected client client3
+/w client5 Hellow
+
+connected client client1
+connected client client2
+connected client client3
+/username jonathan
+
+connected client client1
+connected client client2
+connected client client3
+/username gerald
+
+/username gerald
+
+/username gerald
+
+connected client client1
+connected client client2
+connected client client3
+/kick client2 password
+
+/kick client2 Pa$$word
+
+disconnecting client2
+/kick client1 Pa$$word

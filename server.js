@@ -34,22 +34,25 @@ function sendWhisperToAnotherClient(data, socket) {
     })
     if (clientToSendMessageTo) {
         clientToSendMessageTo.write(message)
-    } else if (error) {
-        throw error(console.log('Invalid user input'));
-        }
+    } else {
+        socket.write('Bad whisper. Try again.')
     }
+}
 
 function updateUsernameOfClient(data, socket) {
     const words = data.trim().split(' ');
     const username = words[1];
     const otherClients = getOtherClients(socket);
+    const isUserNameUnique = !otherClients.some(client =>
+        client.name === username)
+    const isValid = username && isUserNameUnique; 
     const message = `Changing ${socket.name} to ${username}`;
-    socket.name = username;
+    if (isValid) {
+        socket.name = username;
     otherClients.forEach(client => client.write(message));
-    // else if (error) {
-        // throw error;
-        // console.log('Invalid user input');
-        // }
+    } else {
+        socket.write('Choose another username.')
+    }
   
 }
 
@@ -58,17 +61,15 @@ function kickAnotherConnectedClient(data, socket) {
     const username = words[1];
     const password = words[2];
     const clientToKickOut = clients.find(clientsocket => clientsocket.name === username);
-    const isValid = clientToKickOut && password === 'Pa$$word';
+    const isValid = clientToKickOut && password === 'Pa$$word' && words.length === 3 && username !== socket.name;
     
     if (isValid) {
         
         clientToKickOut.write('You are kicked out, buddy! Sorry. Not sorry.');
         clientToKickOut.emit('end');
+    } else {
+        socket.write('Incorrect kick command. Try again.')
     }
-   // else if (error) {
-        // throw error;
-        // console.log('Invalid user input');
-        // }
 }
 
 function sendListOfAllConnectedClientNames(socket) {
