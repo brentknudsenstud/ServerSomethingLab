@@ -34,12 +34,10 @@ function sendWhisperToAnotherClient(data, socket) {
     })
     if (clientToSendMessageTo) {
         clientToSendMessageTo.write(message)
-    } // else if (error) {
-        // throw error;
-        // console.log('Invalid user input');
-    // }put if (error) message in here if it doesn't work for some reason
-    // if (err) throw err;
-}
+    } else if (error) {
+        throw error(console.log('Invalid user input'));
+        }
+    }
 
 function updateUsernameOfClient(data, socket) {
     const words = data.trim().split(' ');
@@ -48,8 +46,10 @@ function updateUsernameOfClient(data, socket) {
     const message = `Changing ${socket.name} to ${username}`;
     socket.name = username;
     otherClients.forEach(client => client.write(message));
-    // put if (error) message in here if it doesn't work for some reason
-    // if (err) throw err;
+    // else if (error) {
+        // throw error;
+        // console.log('Invalid user input');
+        // }
   
 }
 
@@ -65,13 +65,15 @@ function kickAnotherConnectedClient(data, socket) {
         clientToKickOut.write('You are kicked out, buddy! Sorry. Not sorry.');
         clientToKickOut.emit('end');
     }
-    // put if (error) message in here if it doesn't work for some reason
-    // if (err) throw err;
+   // else if (error) {
+        // throw error;
+        // console.log('Invalid user input');
+        // }
 }
 
 function sendListOfAllConnectedClientNames(socket) {
     const listofNames = clients.map(clientsocket => clientsocket.name);
-    const message = listofNames.join(',');
+    const message = listofNames.join(',' + ' ');
     socket.write(message);
 }
 
@@ -115,7 +117,7 @@ app.get('/', function(request, response) {
 
 const server = net.createServer((socket) => {
     clients.push(socket);
-
+    console.log('Number of clients, ', clients.length);
     count = count + 1;
     socket.clientId = count;
     socket.name = 'client' + count ; 

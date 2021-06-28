@@ -42,3 +42,81 @@ connected client client3
 /kick client2 Pa$$word
 
 disconnecting client2
+connected client client1
+connected client client2
+connected client client3
+connected client client1
+connected client client2
+connected client client3
+/kick
+
+/kick client2
+
+disconnecting client1
+connected client client4
+/kick client3
+
+connected client client1
+connected client client2
+connected client client3
+/kick client3 Pa$$word
+
+disconnecting client3
+/clientlist
+
+connected client client1
+connected client client2
+connected client client3
+/kick client2 Pa$$word
+
+disconnecting client2
+/clientlist
+
+connected client client1
+connected client client2
+connected client client3
+/clientlist
+
+/kick client2 Pa$$word
+
+disconnecting client2
+/clientlist
+
+/clientlist
+
+connected client client1
+connected client client2
+connected client client3
+/kick client3 Pa$$word
+
+disconnecting client3
+/clientlist
+
+connected client client1
+connected client client2
+connected client client3
+/clientlist
+
+/clientlist
+
+connected client client1
+connected client client2
+connected client client3
+/clientlist
+
+/username john
+
+/clientlist
+
+/username brent
+
+/username scott
+
+/clientlist
+
+/w brent hello to you brent!
+
+/kick brent Pa$$word
+
+disconnecting brent
+/clientlist
